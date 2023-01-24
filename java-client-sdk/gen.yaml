@@ -1,0 +1,4 @@
+java:
+    version: 0.1.0
+    packagename: dev.resendapi.javaclientsdk
+    projectname: resend-client-sdk-java

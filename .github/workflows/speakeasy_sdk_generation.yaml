@@ -1,0 +1,21 @@
+name: Generate
+
+on:
+  workflow_dispatch: {} # Allows manual triggering of the workflow to generate SDK
+  schedule:
+    - cron: 0 0 * * * # Runs every day at midnight
+
+jobs:
+  generate:
+    uses: speakeasy-api/sdk-generation-action/.github/workflows/sdk-generation.yaml@v7
+    with:
+      speakeasy_api_key: ${{ secrets.SPEAKEASY_API_KEY }}
+      speakeasy_version: latest
+      openapi_doc_location: ./resend_openapi.yaml 
+      languages: |-
+        - java
+      mode: pr
+    secrets:
+      github_access_token: ${{ secrets.GITHUB_TOKEN }}
+      speakeasy_api_key: ${{ secrets.SPEAKEASY_API_KEY }}
+
