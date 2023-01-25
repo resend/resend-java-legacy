@@ -1,0 +1,46 @@
+<!-- Start SDK Example Usage -->
+```java
+package hello.world;
+
+import dev.resendapi.javaclientsdk.SDK;
+import dev.resendapi.javaclientsdk.models.shared.Security;
+
+public class Application {
+    public static void main(String[] args) {
+        try {
+            SDK.Builder builder = SDK.builder();
+
+            builder.setSecurity(
+                new Security() {{
+                    bearerAuth = new SchemeBearerAuth() {{
+                        authorization = "Bearer YOUR_BEARER_TOKEN_HERE";
+                    }};
+                }}
+            );
+
+            SDK sdk = builder.build();
+
+            SendEmailRequest req = new SendEmailRequest() {{
+                request = new Email() {{
+                    bcc = "sit";
+                    cc = "voluptas";
+                    from = "culpa";
+                    html = "expedita";
+                    react = "consequuntur";
+                    replyTo = "dolor";
+                    subject = "expedita";
+                    text = "voluptas";
+                    to = "fugit";
+                }};
+            }};
+
+            SendEmailResponse res = sdk.emails.sendEmail(req);
+
+            if (res.sendEmailResponse.isPresent()) {
+                // handle response
+            }
+        } catch (Exception e) {
+            // handle exception
+        }
+```
+<!-- End SDK Example Usage -->

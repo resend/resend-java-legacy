@@ -1,0 +1,16 @@
+package dev.resendapi.javaclientsdk.models.operations;
+
+import dev.resendapi.javaclientsdk.utils.SpeakeasyMetadata;
+public class SendEmailRequest {
+    public dev.resendapi.javaclientsdk.models.utils.RetryConfig retries;
+    public SendEmailRequest withRetries(dev.resendapi.javaclientsdk.models.utils.RetryConfig retries) {
+        this.retries = retries;
+        return this;
+    }
+    @SpeakeasyMetadata("request:mediaType=application/json")
+    public dev.resendapi.javaclientsdk.models.shared.Email request;
+    public SendEmailRequest withRequest(dev.resendapi.javaclientsdk.models.shared.Email request) {
+        this.request = request;
+        return this;
+    }
+}
