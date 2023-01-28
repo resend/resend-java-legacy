@@ -1,4 +1,6 @@
-# 
+# Resend Java SDK
+
+Resend is the email platform for developers. Learn more on our [docsite](https://resend.com/docs/api-reference/concepts) 
 
 <!-- Start SDK Installation -->
 ## SDK Installation
@@ -57,6 +59,13 @@ public class Application {
         }
 ```
 <!-- End SDK Example Usage -->
+
+## Authentication
+To authenticate you need to add an Authorization header with the contents of the header being Bearer re_123456789 where re_123456789 is your [API Key](https://resend.com/login?redirectedFrom=%2Fapi-keys).
+
+```bash
+Authorization: Bearer re_123
+```
 
 <!-- Start SDK Available Operations -->
 ## SDK Available Operations
