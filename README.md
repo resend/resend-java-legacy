@@ -8,7 +8,7 @@ Resend is the email platform for developers. Learn more on our [docsite](https:/
 ### Gradle
 
 ```groovy
-implementation 'dev.resendapi.javaclientsdk::0.1.0'
+implementation 'dev.resendapi.javaclientsdk::0.1.1'
 ```
 <!-- End SDK Installation -->
 
