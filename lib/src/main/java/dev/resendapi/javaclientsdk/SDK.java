@@ -19,8 +19,8 @@ public class SDK {
 	private dev.resendapi.javaclientsdk.models.shared.Security _security;
 	private String _serverUrl;
 	private String _language = "java";
-	private String _sdkVersion = "0.1.0";
-	private String _genVersion = "0.21.0";
+	private String _sdkVersion = "0.2.0";
+	private String _genVersion = "0.22.0";
 
 	public static class Builder {
 		private HTTPClient client;
