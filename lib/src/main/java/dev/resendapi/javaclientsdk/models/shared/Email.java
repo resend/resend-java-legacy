@@ -1,8 +1,9 @@
 package dev.resendapi.javaclientsdk.models.shared;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Email {
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("bcc")
