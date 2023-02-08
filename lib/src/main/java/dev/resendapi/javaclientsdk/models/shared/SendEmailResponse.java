@@ -1,11 +1,12 @@
 package dev.resendapi.javaclientsdk.models.shared;
 
-import java.time.OffsetDateTime;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import dev.resendapi.javaclientsdk.utils.DateTimeSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import dev.resendapi.javaclientsdk.utils.DateTimeDeserializer;
+import dev.resendapi.javaclientsdk.utils.DateTimeSerializer;
+import java.time.OffsetDateTime;
+
 public class SendEmailResponse {
     @JsonSerialize(using = DateTimeSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer.class)

@@ -1,6 +1,7 @@
 package dev.resendapi.javaclientsdk.models.operations;
 
 
+
 public class SendEmailResponse {
     public String contentType;
     public SendEmailResponse withContentType(String contentType) {
