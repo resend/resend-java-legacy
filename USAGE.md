@@ -22,15 +22,15 @@ public class Application {
 
             SendEmailRequest req = new SendEmailRequest() {{
                 request = new Email() {{
-                    bcc = "sit";
-                    cc = "voluptas";
-                    from = "culpa";
-                    html = "expedita";
-                    react = "consequuntur";
-                    replyTo = "dolor";
-                    subject = "expedita";
-                    text = "voluptas";
-                    to = "fugit";
+                    bcc = "unde";
+                    cc = "deserunt";
+                    from = "porro";
+                    html = "nulla";
+                    react = "id";
+                    replyTo = "vero";
+                    subject = "perspiciatis";
+                    text = "nulla";
+                    to = "nihil";
                 }};
             }};
 
