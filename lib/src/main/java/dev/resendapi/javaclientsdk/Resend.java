@@ -1,13 +1,10 @@
-
-
 package dev.resendapi.javaclientsdk;
 
 import dev.resendapi.javaclientsdk.utils.HTTPClient;
 import dev.resendapi.javaclientsdk.utils.SpeakeasyHTTPClient;
 
 
-
-public class SDK {
+public class Resend {
 	public static final String[] SERVERS = {
 		"https://api.resend.com",
 	};
@@ -19,8 +16,8 @@ public class SDK {
 	private dev.resendapi.javaclientsdk.models.shared.Security _security;
 	private String _serverUrl;
 	private String _language = "java";
-	private String _sdkVersion = "0.1.0";
-	private String _genVersion = "0.21.0";
+	private String _sdkVersion = "1.0.0";
+	private String _genVersion = "1.3.1";
 
 	public static class Builder {
 		private HTTPClient client;
@@ -52,8 +49,8 @@ public class SDK {
 			return this;
 		}
 		
-		public SDK build() throws Exception {
-			return new SDK(this.client, this.security, this.serverUrl, this.params);
+		public Resend build() throws Exception {
+			return new Resend(this.client, this.security, this.serverUrl, this.params);
 		}
 	}
 
@@ -61,7 +58,7 @@ public class SDK {
 		return new Builder();
 	}
 
-	private SDK(HTTPClient client, dev.resendapi.javaclientsdk.models.shared.Security security, String serverUrl, java.util.Map<String, String> params) throws Exception {
+	private Resend(HTTPClient client, dev.resendapi.javaclientsdk.models.shared.Security security, String serverUrl, java.util.Map<String, String> params) throws Exception {
 		this._defaultClient = client;
 		
 		if (this._defaultClient == null) {
@@ -94,5 +91,4 @@ public class SDK {
 			this._genVersion
 		);
 	}
-	
 }
