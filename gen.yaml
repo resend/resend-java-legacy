@@ -6,3 +6,4 @@ java:
     version: 0.1.0
     packagename: dev.resendapi.javaclientsdk
 telemetryenabled: true
+sdkclassname: resend
