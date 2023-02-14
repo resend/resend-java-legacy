@@ -1,11 +1,12 @@
 package dev.resendapi.javaclientsdk;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.resendapi.javaclientsdk.utils.HTTPClient;
 import dev.resendapi.javaclientsdk.utils.HTTPRequest;
-import java.net.http.HttpResponse;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.nio.charset.StandardCharsets;
 import dev.resendapi.javaclientsdk.utils.SerializedBody;
+import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
+import java.time.OffsetDateTime;
 
 public class Emails {
 	private HTTPClient _defaultClient;
@@ -23,8 +24,7 @@ public class Emails {
 		this._sdkVersion = sdkVersion;
 		this._genVersion = genVersion;
 	}
-	
-	
+    
     /**
      * sendEmail - Send an email
     **/
@@ -66,5 +66,4 @@ public class Emails {
 
         return res;
     }
-	
 }
