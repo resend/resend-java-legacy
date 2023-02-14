@@ -2,13 +2,13 @@
 ```java
 package hello.world;
 
-import dev.resendapi.javaclientsdk.SDK;
+import dev.resendapi.javaclientsdk.Resend;
 import dev.resendapi.javaclientsdk.models.shared.Security;
 
 public class Application {
     public static void main(String[] args) {
         try {
-            SDK.Builder builder = SDK.builder();
+            Resend.Builder builder = Resend.builder();
 
             builder.setSecurity(
                 new Security() {{
@@ -18,19 +18,19 @@ public class Application {
                 }}
             );
 
-            SDK sdk = builder.build();
+            Resend sdk = builder.build();
 
             SendEmailRequest req = new SendEmailRequest() {{
                 request = new Email() {{
-                    bcc = "sit";
-                    cc = "voluptas";
-                    from = "culpa";
-                    html = "expedita";
-                    react = "consequuntur";
-                    replyTo = "dolor";
-                    subject = "expedita";
-                    text = "voluptas";
-                    to = "fugit";
+                    bcc = "unde";
+                    cc = "deserunt";
+                    from = "porro";
+                    html = "nulla";
+                    react = "id";
+                    replyTo = "vero";
+                    subject = "perspiciatis";
+                    text = "nulla";
+                    to = "nihil";
                 }};
             }};
 
