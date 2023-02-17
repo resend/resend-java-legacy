@@ -9,9 +9,11 @@ public class SendEmailRequest {
         this.request = request;
         return this;
     }
+    
     public dev.resendapi.javaclientsdk.models.utils.RetryConfig retries;
     public SendEmailRequest withRetries(dev.resendapi.javaclientsdk.models.utils.RetryConfig retries) {
         this.retries = retries;
         return this;
     }
+    
 }

@@ -16,22 +16,26 @@ public class SendEmailResponse {
         this.createdAt = createdAt;
         return this;
     }
+    
     @JsonProperty("from")
     public String from;
     public SendEmailResponse withFrom(String from) {
         this.from = from;
         return this;
     }
+    
     @JsonProperty("id")
     public String id;
     public SendEmailResponse withId(String id) {
         this.id = id;
         return this;
     }
+    
     @JsonProperty("to")
     public String to;
     public SendEmailResponse withTo(String to) {
         this.to = to;
         return this;
     }
+    
 }

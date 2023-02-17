@@ -3,6 +3,7 @@ package dev.resendapi.javaclientsdk;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.resendapi.javaclientsdk.utils.HTTPClient;
 import dev.resendapi.javaclientsdk.utils.HTTPRequest;
+import dev.resendapi.javaclientsdk.utils.JSON;
 import dev.resendapi.javaclientsdk.utils.SerializedBody;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
@@ -47,18 +48,17 @@ public class Emails {
         
         HttpResponse<byte[]> httpRes = client.send(req);
 
-        String contentType = httpRes.headers().allValues("Content-Type").get(0);
+        String contentType = httpRes.headers().firstValue("Content-Type").orElse("application/octet-stream");
 
         dev.resendapi.javaclientsdk.models.operations.SendEmailResponse res = new dev.resendapi.javaclientsdk.models.operations.SendEmailResponse() {{
             sendEmailResponse = null;
         }};
-        res.statusCode = Long.valueOf(httpRes.statusCode());
+        res.statusCode = httpRes.statusCode();
         res.contentType = contentType;
         
         if (httpRes.statusCode() == 200) {
             if (dev.resendapi.javaclientsdk.utils.Utils.matchContentType(contentType, "application/json")) {
-                ObjectMapper mapper = new ObjectMapper();
-                mapper.findAndRegisterModules();
+                ObjectMapper mapper = JSON.getMapper();
                 dev.resendapi.javaclientsdk.models.shared.SendEmailResponse out = mapper.readValue(new String(httpRes.body(), StandardCharsets.UTF_8), dev.resendapi.javaclientsdk.models.shared.SendEmailResponse.class);
                 res.sendEmailResponse = out;
             }

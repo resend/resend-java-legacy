@@ -9,4 +9,5 @@ public class SchemeBearerAuth {
         this.authorization = authorization;
         return this;
     }
+    
 }

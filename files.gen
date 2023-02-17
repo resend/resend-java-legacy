@@ -7,6 +7,7 @@ lib/src/main/java/dev/resendapi/javaclientsdk/utils/FormMetadata.java
 lib/src/main/java/dev/resendapi/javaclientsdk/utils/HTTPClient.java
 lib/src/main/java/dev/resendapi/javaclientsdk/utils/HTTPRequest.java
 lib/src/main/java/dev/resendapi/javaclientsdk/utils/HeaderMetadata.java
+lib/src/main/java/dev/resendapi/javaclientsdk/utils/JSON.java
 lib/src/main/java/dev/resendapi/javaclientsdk/utils/Metadata.java
 lib/src/main/java/dev/resendapi/javaclientsdk/utils/MultipartFormMetadata.java
 lib/src/main/java/dev/resendapi/javaclientsdk/utils/PathParamsMetadata.java

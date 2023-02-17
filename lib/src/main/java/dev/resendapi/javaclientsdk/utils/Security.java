@@ -15,7 +15,7 @@ public class Security {
             Field[] fields = security.getClass().getFields();
 
             for (Field field : fields) {
-                Object value = Types.getValue(field.get(security));
+                Object value = field.get(security);
                 if (value == null) {
                     continue;
                 }
@@ -41,7 +41,7 @@ public class Security {
         Field[] fields = option.getClass().getFields();
 
         for (Field field : fields) {
-            Object value = Types.getValue(field.get(option));
+            Object value = field.get(option);
 
             if (value == null) {
                 continue;
@@ -58,7 +58,7 @@ public class Security {
 
     private static void parseSecurityScheme(SpeakeasyHTTPSecurityClient client, SecurityMetadata schemeMetadata,
             Object scheme) throws Exception {
-        if (schemeMetadata.type == "http" && schemeMetadata.subtype == "basic") {
+        if (schemeMetadata.type.equals("http") && schemeMetadata.subtype.equals("basic")) {
             parseBasicAuthScheme(client, scheme);
             return;
         }
@@ -66,14 +66,14 @@ public class Security {
         Field[] fields = scheme.getClass().getFields();
 
         for (Field field : fields) {
-            Object value = Types.getValue(field.get(scheme));
+            Object value = field.get(scheme);
 
             if (value == null) {
                 continue;
             }
 
             SecurityMetadata securityMetadata = SecurityMetadata.parse(field);
-            if (securityMetadata == null || securityMetadata.name == "") {
+            if (securityMetadata == null || securityMetadata.name.isEmpty()) {
                 continue;
             }
 
@@ -81,33 +81,35 @@ public class Security {
                 case "apiKey":
                     switch (schemeMetadata.subtype) {
                         case "header":
-                            client.addHeader(securityMetadata.name, String.valueOf(value));
+                            client.addHeader(securityMetadata.name, Utils.valToString(value));
                             break;
                         case "query":
-                            client.addQueryParam(new BasicNameValuePair(securityMetadata.name, String.valueOf(value)));
+                            client.addQueryParam(new BasicNameValuePair(securityMetadata.name, Utils.valToString(value)));
                             break;
                         case "cookie":
                             client.addHeader("Cookie",
-                                    String.format("%s=%s", securityMetadata.name, String.valueOf(value)));
+                                    String.format("%s=%s", securityMetadata.name, Utils.valToString(value)));
                             break;
                         default:
                             throw new Error(
                                     "Unsupported security scheme subtype for apiKey: " + securityMetadata.subtype);
                     }
+                    break;
                 case "openIdConnect":
-                    client.addHeader(securityMetadata.name, String.valueOf(value));
+                    client.addHeader(securityMetadata.name, Utils.valToString(value));
                     break;
                 case "oauth2":
-                    client.addHeader(securityMetadata.name, String.valueOf(value));
+                    client.addHeader(securityMetadata.name, Utils.valToString(value));
                     break;
                 case "http":
                     switch (schemeMetadata.subtype) {
                         case "bearer":
-                            client.addHeader(securityMetadata.name, String.valueOf(value));
+                            client.addHeader(securityMetadata.name, Utils.valToString(value));
                             break;
                         default:
                             throw new Error("Unsupported security scheme subtype for bearer");
                     }
+                    break;
                 default:
                     throw new Error("Unsupported security scheme type");
             }
@@ -122,31 +124,30 @@ public class Security {
         String password = "";
 
         for (Field field : fields) {
-            Object value = Types.getValue(field.get(scheme));
+            Object value = field.get(scheme);
 
             if (value == null) {
                 continue;
             }
 
             SecurityMetadata securityMetadata = SecurityMetadata.parse(field);
-            if (securityMetadata == null || securityMetadata.name == "") {
+            if (securityMetadata == null || securityMetadata.name.isEmpty()) {
                 continue;
             }
 
             switch (securityMetadata.name) {
                 case "username":
-                    username = String.valueOf(value);
+                    username = Utils.valToString(value);
                     break;
                 case "password":
-                    password = String.valueOf(value);
+                    password = Utils.valToString(value);
                     break;
                 default:
                     throw new Error("Unsupported security scheme field for basic auth: " + securityMetadata.name);
             }
         }
 
-        client.addHeader("Authorization",
-                Base64.getEncoder().encodeToString(String.format("%s:%s", username, password).getBytes()));
+        client.addHeader("Authorization", "Basic " + Base64.getEncoder().encodeToString(String.format("%s:%s", username, password).getBytes()));
     }
 
     private Security() {
