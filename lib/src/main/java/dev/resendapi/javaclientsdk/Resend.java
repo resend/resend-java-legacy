@@ -9,7 +9,7 @@ public class Resend {
 		"https://api.resend.com",
 	};
   	
-  	public Emails emails;	
+  	public Email email;	
 
 	private HTTPClient _defaultClient;
 	private HTTPClient _securityClient;
@@ -82,7 +82,7 @@ public class Resend {
 			this._serverUrl = SERVERS[0];
 		}
 		
-		this.emails = new Emails(
+		this.email = new Email(
 			this._defaultClient,
 			this._securityClient,
 			this._serverUrl,

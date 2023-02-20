@@ -26,15 +26,14 @@ public class Application {
                     cc = "deserunt";
                     from = "porro";
                     html = "nulla";
-                    react = "id";
-                    replyTo = "vero";
-                    subject = "perspiciatis";
-                    text = "nulla";
-                    to = "nihil";
+                    replyTo = "id";
+                    subject = "vero";
+                    text = "perspiciatis";
+                    to = "nulla";
                 }};
             }};
 
-            SendEmailResponse res = sdk.emails.sendEmail(req);
+            SendEmailResponse res = sdk.email.sendEmail(req);
 
             if (res.sendEmailResponse.isPresent()) {
                 // handle response
