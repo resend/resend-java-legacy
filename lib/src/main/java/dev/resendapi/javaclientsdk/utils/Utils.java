@@ -35,7 +35,7 @@ public final class Utils {
                     continue;
                 }
 
-                Object value = Types.getValue(field.get(params));
+                Object value = field.get(params);
                 if (value == null) {
                     continue;
                 }
@@ -51,7 +51,7 @@ public final class Utils {
 
                                 pathParams.put(pathParamsMetadata.name,
                                         String.join(",",
-                                                Arrays.asList(array).stream().map(v -> String.valueOf(v)).toList()));
+                                                Arrays.asList(array).stream().map(v -> Utils.valToString(v)).toList()));
                                 break;
                             case MAP:
                                 Map<?, ?> map = (Map<?, ?>) value;
@@ -62,16 +62,13 @@ public final class Utils {
                                 pathParams.put(pathParamsMetadata.name,
                                         String.join(",", map.entrySet().stream().map(e -> {
                                             if (pathParamsMetadata.explode) {
-                                                return String.format("%s=%s", String.valueOf(e.getKey()),
-                                                        String.valueOf(e.getValue()));
+                                                return String.format("%s=%s", Utils.valToString(e.getKey()),
+                                                        Utils.valToString(e.getValue()));
                                             } else {
-                                                return String.format("%s,%s", String.valueOf(e.getKey()),
-                                                        String.valueOf(e.getValue()));
+                                                return String.format("%s,%s", Utils.valToString(e.getKey()),
+                                                        Utils.valToString(e.getValue()));
                                             }
                                         }).toList()));
-                                break;
-                            case PRIMITIVE:
-                                pathParams.put(pathParamsMetadata.name, String.valueOf(value));
                                 break;
                             case OBJECT:
                                 List<String> values = new ArrayList<String>();
@@ -83,7 +80,7 @@ public final class Utils {
                                         continue;
                                     }
 
-                                    Object val = Types.getValue(valueField.get(value));
+                                    Object val = valueField.get(value);
 
                                     if (val == null) {
                                         continue;
@@ -91,14 +88,17 @@ public final class Utils {
 
                                     if (pathParamsMetadata.explode) {
                                         values.add(String.format("%s=%s", valuePathParamsMetadata.name,
-                                                String.valueOf(val)));
+                                                Utils.valToString(val)));
                                     } else {
                                         values.add(String.format("%s,%s", valuePathParamsMetadata.name,
-                                                String.valueOf(val)));
+                                                Utils.valToString(val)));
                                     }
                                 }
 
                                 pathParams.put(pathParamsMetadata.name, String.join(",", values));
+                                break;
+                            default:
+                                pathParams.put(pathParamsMetadata.name, Utils.valToString(value));
                                 break;
                         }
                 }
@@ -185,7 +185,7 @@ public final class Utils {
                 continue;
             }
 
-            Object value = Types.getValue(field.get(headers));
+            Object value = field.get(headers);
             if (value == null) {
                 continue;
             }
@@ -202,17 +202,17 @@ public final class Utils {
                             continue;
                         }
 
-                        Object valueFieldValue = Types.getValue(valueField.get(value));
+                        Object valueFieldValue = valueField.get(value);
                         if (valueFieldValue == null) {
                             continue;
                         }
 
                         if (headerMetadata.explode) {
                             items.add(
-                                    String.format("%s=%s", valueHeaderMetadata.name, String.valueOf(valueFieldValue)));
+                                    String.format("%s=%s", valueHeaderMetadata.name, Utils.valToString(valueFieldValue)));
                         } else {
                             items.add(valueHeaderMetadata.name);
-                            items.add(String.valueOf(valueFieldValue));
+                            items.add(Utils.valToString(valueFieldValue));
                         }
                     }
 
@@ -235,11 +235,11 @@ public final class Utils {
 
                     for (Map.Entry<?, ?> entry : map.entrySet()) {
                         if (headerMetadata.explode) {
-                            items.add(String.format("%s=%s", String.valueOf(entry.getKey()),
-                                    String.valueOf(entry.getValue())));
+                            items.add(String.format("%s=%s", Utils.valToString(entry.getKey()),
+                                    Utils.valToString(entry.getValue())));
                         } else {
-                            items.add(String.valueOf(entry.getKey()));
-                            items.add(String.valueOf(entry.getValue()));
+                            items.add(Utils.valToString(entry.getKey()));
+                            items.add(Utils.valToString(entry.getValue()));
                         }
                     }
 
@@ -262,7 +262,7 @@ public final class Utils {
                     List<String> items = new ArrayList<String>();
 
                     for (Object item : array) {
-                        items.add(String.valueOf(item));
+                        items.add(Utils.valToString(item));
                     }
 
                     if (!result.containsKey(headerMetadata.name)) {
@@ -274,17 +274,32 @@ public final class Utils {
 
                     break;
                 }
-                default:
+                default: {
                     if (!result.containsKey(headerMetadata.name)) {
                         result.put(headerMetadata.name, new ArrayList<String>());
                     }
 
                     List<String> values = result.get(headerMetadata.name);
-                    values.add(String.valueOf(value));
+                    values.add(Utils.valToString(value));
+                    break;
+                }
             }
         }
 
         return result;
+    }
+
+    public static String valToString(Object value) {
+        switch (Types.getType(value.getClass())) {
+            case ENUM:
+                try {
+                    return String.valueOf(value.getClass().getDeclaredField("value").get(value));
+                } catch (Exception e) {
+                    return "ERROR_UNKNOWN_VALUE";
+                }
+            default:
+                return String.valueOf(value);
+        }
     }
 
     private Utils() {

@@ -9,4 +9,5 @@ public class Security {
         this.bearerAuth = bearerAuth;
         return this;
     }
+    
 }

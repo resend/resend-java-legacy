@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.net.http.HttpRequest.BodyPublishers;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -23,8 +25,6 @@ public class RequestBody {
     public static SerializedBody serialize(Object request)
             throws NoSuchFieldException, IllegalArgumentException, IllegalAccessException,
             UnsupportedOperationException, IOException {
-        request = Types.getValue(request);
-
         if (request == null) {
             return null;
         }
@@ -34,7 +34,7 @@ public class RequestBody {
             throw new Error("Request object must have a field named 'request'");
         }
 
-        Object requestValue = Types.getValue(requestField.get(request));
+        Object requestValue = requestField.get(request);
 
         if (requestValue == null) {
             return null;
@@ -48,7 +48,7 @@ public class RequestBody {
         Field[] fields = requestValue.getClass().getFields();
 
         for (Field field : fields) {
-            Object val = Types.getValue(field.get(requestValue));
+            Object val = field.get(requestValue);
             if (val == null) {
                 continue;
             }
@@ -73,16 +73,11 @@ public class RequestBody {
 
         SerializedBody body = new SerializedBody();
 
-        if(textPattern.matcher(contentType).matches()) {
-            ObjectMapper mapper = new ObjectMapper();
-            mapper.findAndRegisterModules();
-
+        if (textPattern.matcher(contentType).matches()) {
             body.contentType = contentType;
             body.body = BodyPublishers.ofString(value.toString());
         } else if (jsonPattern.matcher(contentType).matches()) {
-            ObjectMapper mapper = new ObjectMapper();
-            mapper.findAndRegisterModules();
-
+            ObjectMapper mapper = JSON.getMapper();
             body.contentType = contentType;
             body.body = BodyPublishers.ofString(mapper.writeValueAsString(value));
         } else if (multipartPattern.matcher(contentType).matches()) {
@@ -90,7 +85,15 @@ public class RequestBody {
         } else if (formPattern.matcher(contentType).matches()) {
             body = serializeFormData(value);
         } else {
-            throw new Error("Unsupported content type " + contentType + " for field " + fieldName);
+            if (value instanceof String) {
+                body.contentType = contentType;
+                body.body = BodyPublishers.ofString((String) value);
+            } else if (value instanceof byte[]) {
+                body.contentType = contentType;
+                body.body = BodyPublishers.ofByteArray((byte[]) value);
+            } else {
+                throw new Error("Unsupported content type " + contentType + " for field " + fieldName);
+            }
         }
 
         return body;
@@ -106,7 +109,7 @@ public class RequestBody {
         Field[] fields = value.getClass().getFields();
 
         for (Field field : fields) {
-            Object val = Types.getValue(field.get(value));
+            Object val = field.get(value);
 
             if (val == null) {
                 continue;
@@ -120,18 +123,17 @@ public class RequestBody {
             if (metadata.file) {
                 serializeMultipartFile(builder, val);
             } else if (metadata.json) {
-                ObjectMapper mapper = new ObjectMapper();
-                mapper.findAndRegisterModules();
+                ObjectMapper mapper = JSON.getMapper();
                 String json = mapper.writeValueAsString(val);
                 builder.addTextBody(metadata.name, json, ContentType.APPLICATION_JSON);
             } else {
                 if (val.getClass().isArray()) {
                     Object[] arr = (Object[]) val;
                     for (Object item : arr) {
-                        builder.addTextBody(metadata.name + "[]", String.valueOf(item));
+                        builder.addTextBody(metadata.name + "[]", Utils.valToString(item));
                     }
                 } else {
-                    builder.addTextBody(metadata.name, val.toString());
+                    builder.addTextBody(metadata.name, Utils.valToString(val));
                 }
             }
         }
@@ -161,7 +163,7 @@ public class RequestBody {
         Field[] fields = file.getClass().getFields();
 
         for (Field field : fields) {
-            Object val = Types.getValue(field.get(file));
+            Object val = field.get(file);
 
             if (val == null) {
                 continue;
@@ -176,7 +178,7 @@ public class RequestBody {
                 content = (byte[]) val;
             } else {
                 fieldName = metadata.name;
-                fileName = String.valueOf(val);
+                fileName = Utils.valToString(val);
             }
         }
 
@@ -197,14 +199,15 @@ public class RequestBody {
 
                 for (Map.Entry<?, ?> entry : map.entrySet()) {
                     params.add(
-                            new BasicNameValuePair(String.valueOf(entry.getKey()), String.valueOf(entry.getValue())));
+                            new BasicNameValuePair(Utils.valToString(entry.getKey()),
+                                    Utils.valToString(entry.getValue())));
                 }
                 break;
             case OBJECT:
                 Field[] fields = value.getClass().getFields();
 
                 for (Field field : fields) {
-                    Object val = Types.getValue(field.get(value));
+                    Object val = field.get(value);
 
                     if (val == null) {
                         continue;
@@ -216,39 +219,45 @@ public class RequestBody {
                     }
 
                     if (metadata.json) {
-                        ObjectMapper mapper = new ObjectMapper();
-                        mapper.findAndRegisterModules();
+                        ObjectMapper mapper = JSON.getMapper();
                         String json = mapper.writeValueAsString(val);
                         params.add(new BasicNameValuePair(metadata.name, json));
                     } else {
                         switch (Types.getType(val.getClass())) {
                             case OBJECT: {
-                                Field[] valFields = val.getClass().getFields();
+                                if (val.getClass() == LocalDate.class) {
+                                    params.add(new BasicNameValuePair(metadata.name, String.valueOf(val)));
+                                } else if (val.getClass() == OffsetDateTime.class) {
+                                    params.add(new BasicNameValuePair(metadata.name, String.valueOf(val)));
+                                } else {
 
-                                List<String> items = new ArrayList<String>();
+                                    Field[] valFields = val.getClass().getFields();
 
-                                for (Field valField : valFields) {
-                                    Object v = Types.getValue(valField.get(val));
-                                    if (v == null) {
-                                        continue;
+                                    List<String> items = new ArrayList<String>();
+
+                                    for (Field valField : valFields) {
+                                        Object v = valField.get(val);
+                                        if (v == null) {
+                                            continue;
+                                        }
+
+                                        FormMetadata valMetadata = FormMetadata.parse(valField);
+                                        if (valMetadata == null) {
+                                            continue;
+                                        }
+
+                                        if (metadata.explode) {
+                                            params.add(new BasicNameValuePair(valMetadata.name,
+                                                    Utils.valToString(v)));
+                                        } else {
+                                            items.add(String.format("%s,%s", valMetadata.name,
+                                                    Utils.valToString(v)));
+                                        }
                                     }
 
-                                    FormMetadata valMetadata = FormMetadata.parse(valField);
-                                    if (valMetadata == null) {
-                                        continue;
+                                    if (items.size() > 0) {
+                                        params.add(new BasicNameValuePair(metadata.name, String.join(",", items)));
                                     }
-
-                                    if (metadata.explode) {
-                                        params.add(new BasicNameValuePair(valMetadata.name,
-                                                String.valueOf(valField.get(v))));
-                                    } else {
-                                        items.add(String.format("%s,%s", valMetadata.name,
-                                                String.valueOf(valField.get(v))));
-                                    }
-                                }
-
-                                if (items.size() > 0) {
-                                    params.add(new BasicNameValuePair(metadata.name, String.join(",", items)));
                                 }
                                 break;
                             }
@@ -259,8 +268,8 @@ public class RequestBody {
 
                                 for (Map.Entry<?, ?> entry : valMap.entrySet()) {
                                     if (metadata.explode) {
-                                        params.add(new BasicNameValuePair(String.valueOf(entry.getKey()),
-                                                String.valueOf(entry.getValue())));
+                                        params.add(new BasicNameValuePair(Utils.valToString(entry.getKey()),
+                                                Utils.valToString(entry.getValue())));
                                     } else {
                                         items.add(String.format("%s,%s", entry.getKey(), entry.getValue()));
                                     }
@@ -279,9 +288,9 @@ public class RequestBody {
 
                                 for (Object item : arr) {
                                     if (metadata.explode) {
-                                        params.add(new BasicNameValuePair(metadata.name, String.valueOf(item)));
+                                        params.add(new BasicNameValuePair(metadata.name, Utils.valToString(item)));
                                     } else {
-                                        items.add(String.valueOf(item));
+                                        items.add(Utils.valToString(item));
                                     }
                                 }
 
@@ -291,8 +300,8 @@ public class RequestBody {
 
                                 break;
                             }
-                            case PRIMITIVE:
-                                params.add(new BasicNameValuePair(metadata.name, String.valueOf(val)));
+                            default:
+                                params.add(new BasicNameValuePair(metadata.name, Utils.valToString(val)));
                                 break;
                         }
                     }

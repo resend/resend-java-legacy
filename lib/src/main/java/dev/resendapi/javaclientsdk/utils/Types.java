@@ -2,14 +2,14 @@ package dev.resendapi.javaclientsdk.utils;
 
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 
 public enum Types {
     PRIMITIVE,
     ARRAY,
     MAP,
-    OBJECT;
+    OBJECT,
+    ENUM;
 
     private static final Set<Class<?>> PRIMITIVE_TYPES = getPrimitiveWrapperTypes();
 
@@ -18,20 +18,13 @@ public enum Types {
             return Types.ARRAY;
         } else if (Map.class.isAssignableFrom(clazz)) {
             return Types.MAP;
+        } else if (clazz.isEnum()) {
+            return Types.ENUM;
         } else if (isPrimitiveWrapperTypes(clazz) || clazz.isPrimitive() || String.class.isAssignableFrom(clazz)) {
             return Types.PRIMITIVE;
         } else {
             return Types.OBJECT;
         }
-    }
-
-    public static Object getValue(Object value) {
-        if (value == null) {
-            return null;
-        }
-
-
-        return value;
     }
 
     private static boolean isPrimitiveWrapperTypes(Class<?> clazz) {

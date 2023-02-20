@@ -8,14 +8,17 @@ public class SendEmailResponse {
         this.contentType = contentType;
         return this;
     }
+    
     public dev.resendapi.javaclientsdk.models.shared.SendEmailResponse sendEmailResponse;
     public SendEmailResponse withSendEmailResponse(dev.resendapi.javaclientsdk.models.shared.SendEmailResponse sendEmailResponse) {
         this.sendEmailResponse = sendEmailResponse;
         return this;
     }
-    public Long statusCode;
-    public SendEmailResponse withStatusCode(Long statusCode) {
+    
+    public Integer statusCode;
+    public SendEmailResponse withStatusCode(Integer statusCode) {
         this.statusCode = statusCode;
         return this;
     }
+    
 }

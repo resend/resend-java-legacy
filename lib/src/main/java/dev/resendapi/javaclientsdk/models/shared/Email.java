@@ -12,6 +12,7 @@ public class Email {
         this.bcc = bcc;
         return this;
     }
+    
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("cc")
     public String cc;
@@ -19,12 +20,14 @@ public class Email {
         this.cc = cc;
         return this;
     }
+    
     @JsonProperty("from")
     public String from;
     public Email withFrom(String from) {
         this.from = from;
         return this;
     }
+    
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("html")
     public String html;
@@ -32,6 +35,7 @@ public class Email {
         this.html = html;
         return this;
     }
+    
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("react")
     public String react;
@@ -39,6 +43,7 @@ public class Email {
         this.react = react;
         return this;
     }
+    
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("reply_to")
     public String replyTo;
@@ -46,12 +51,14 @@ public class Email {
         this.replyTo = replyTo;
         return this;
     }
+    
     @JsonProperty("subject")
     public String subject;
     public Email withSubject(String subject) {
         this.subject = subject;
         return this;
     }
+    
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("text")
     public String text;
@@ -59,10 +66,12 @@ public class Email {
         this.text = text;
         return this;
     }
+    
     @JsonProperty("to")
     public String to;
     public Email withTo(String to) {
         this.to = to;
         return this;
     }
+    
 }
