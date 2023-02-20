@@ -37,14 +37,6 @@ public class Email {
     }
     
     @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("react")
-    public String react;
-    public Email withReact(String react) {
-        this.react = react;
-        return this;
-    }
-    
-    @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("reply_to")
     public String replyTo;
     public Email withReplyTo(String replyTo) {

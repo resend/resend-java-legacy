@@ -1,4 +1,4 @@
-lib/src/main/java/dev/resendapi/javaclientsdk/Emails.java
+lib/src/main/java/dev/resendapi/javaclientsdk/Email.java
 lib/src/main/java/dev/resendapi/javaclientsdk/Resend.java
 lib/build.gradle
 lib/src/main/java/dev/resendapi/javaclientsdk/utils/DateTimeDeserializer.java
