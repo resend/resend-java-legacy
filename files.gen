@@ -1,5 +1,11 @@
 lib/src/main/java/dev/resendapi/javaclientsdk/Email.java
 lib/src/main/java/dev/resendapi/javaclientsdk/Resend.java
+.gitattributes
+.gitignore
+gradle/wrapper/gradle-wrapper.jar
+gradle/wrapper/gradle-wrapper.properties
+gradlew
+gradlew.bat
 lib/build.gradle
 lib/src/main/java/dev/resendapi/javaclientsdk/utils/DateTimeDeserializer.java
 lib/src/main/java/dev/resendapi/javaclientsdk/utils/DateTimeSerializer.java
@@ -30,5 +36,4 @@ lib/src/main/java/dev/resendapi/javaclientsdk/models/shared/SendEmailResponse.ja
 lib/src/main/java/dev/resendapi/javaclientsdk/models/shared/Email.java
 lib/src/main/java/dev/resendapi/javaclientsdk/models/shared/SchemeBearerAuth.java
 lib/src/main/java/dev/resendapi/javaclientsdk/models/shared/Security.java
-lib/src/main/java/dev/resendapi/javaclientsdk/models/utils/RetryConfig.java
 USAGE.md

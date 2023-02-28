@@ -16,8 +16,8 @@ public class Resend {
 	private dev.resendapi.javaclientsdk.models.shared.Security _security;
 	private String _serverUrl;
 	private String _language = "java";
-	private String _sdkVersion = "1.0.2";
-	private String _genVersion = "1.3.3";
+	private String _sdkVersion = "1.2.2";
+	private String _genVersion = "1.5.4";
 
 	public static class Builder {
 		private HTTPClient client;

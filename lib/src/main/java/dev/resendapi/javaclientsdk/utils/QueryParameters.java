@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -91,7 +92,7 @@ public class QueryParameters {
                     values.add(String.join(",", items));
                 }
 
-                params.addAll(values.stream().map(v -> new BasicNameValuePair(queryParamsMetadata.name, v)).toList());
+                params.addAll(values.stream().map(v -> new BasicNameValuePair(queryParamsMetadata.name, v)).collect(Collectors.toList()));
                 break;
             }
             case MAP: {
