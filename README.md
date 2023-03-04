@@ -29,7 +29,6 @@ Authorization: Bearer re_123
 ```
 
 ## SDK Example Usage
-<!-- Start SDK Example Usage -->
 ```java
 package hello.world;
 
@@ -51,14 +50,10 @@ public class Application {
 
             SendEmailRequest req = new SendEmailRequest() {{
                 request = new Email() {{
-                    bcc = "unde";
-                    cc = "deserunt";
-                    from = "porro";
-                    html = "nulla";
-                    replyTo = "id";
-                    subject = "vero";
-                    text = "perspiciatis";
-                    to = "nulla";
+                    from = "hello@resend.com";
+                    to = "thefuture@yourcompany.com";
+                    subject = "Welcome to Resend!";
+                    text = "Hello, World!";
                 }};
             }};
 
@@ -71,7 +66,6 @@ public class Application {
             // handle exception
         }
 ```
-<!-- End SDK Example Usage -->
 
 <!-- Start SDK Available Operations -->
 ## SDK Available Operations
