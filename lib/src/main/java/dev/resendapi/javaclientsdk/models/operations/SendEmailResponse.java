@@ -1,6 +1,6 @@
 package dev.resendapi.javaclientsdk.models.operations;
 
-
+import java.net.http.HttpResponse;
 
 public class SendEmailResponse {
     public String contentType;
@@ -18,6 +18,12 @@ public class SendEmailResponse {
     public Integer statusCode;
     public SendEmailResponse withStatusCode(Integer statusCode) {
         this.statusCode = statusCode;
+        return this;
+    }
+    
+    public HttpResponse<byte[]> rawResponse;
+    public SendEmailResponse withRawResponse(HttpResponse<byte[]> rawResponse) {
+        this.rawResponse = rawResponse;
         return this;
     }
     

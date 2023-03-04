@@ -3,7 +3,7 @@ package dev.resendapi.javaclientsdk;
 import dev.resendapi.javaclientsdk.utils.HTTPClient;
 import dev.resendapi.javaclientsdk.utils.SpeakeasyHTTPClient;
 
-
+/** SDK Documentation: Resend is the email platform for developers.**/
 public class Resend {
 	public static final String[] SERVERS = {
 		"https://api.resend.com",
@@ -16,8 +16,8 @@ public class Resend {
 	private dev.resendapi.javaclientsdk.models.shared.Security _security;
 	private String _serverUrl;
 	private String _language = "java";
-	private String _sdkVersion = "1.2.2";
-	private String _genVersion = "1.5.4";
+	private String _sdkVersion = "1.5.0";
+	private String _genVersion = "1.8.2";
 
 	public static class Builder {
 		private HTTPClient client;
@@ -75,7 +75,7 @@ public class Resend {
 		}
 
 		if (serverUrl != null && !serverUrl.isBlank()) {
-			this._serverUrl = dev.resendapi.javaclientsdk.utils.Utils.replaceParameters(serverUrl, params);
+			this._serverUrl = dev.resendapi.javaclientsdk.utils.Utils.templateUrl(serverUrl, params);
 		}
 		
 		if (this._serverUrl == null) {

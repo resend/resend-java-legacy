@@ -10,6 +10,7 @@ import java.nio.charset.StandardCharsets;
 import java.time.OffsetDateTime;
 
 public class Email {
+	
 	private HTTPClient _defaultClient;
 	private HTTPClient _securityClient;
 	private String _serverUrl;
@@ -25,6 +26,7 @@ public class Email {
 		this._sdkVersion = sdkVersion;
 		this._genVersion = genVersion;
 	}
+	
     
     /**
      * sendEmail - Send an email
@@ -55,6 +57,7 @@ public class Email {
         }};
         res.statusCode = httpRes.statusCode();
         res.contentType = contentType;
+        res.rawResponse = httpRes;
         
         if (httpRes.statusCode() == 200) {
             if (dev.resendapi.javaclientsdk.utils.Utils.matchContentType(contentType, "application/json")) {
