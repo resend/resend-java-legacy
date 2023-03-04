@@ -34,6 +34,5 @@ lib/src/main/java/dev/resendapi/javaclientsdk/models/operations/SendEmailRequest
 lib/src/main/java/dev/resendapi/javaclientsdk/models/operations/SendEmailResponse.java
 lib/src/main/java/dev/resendapi/javaclientsdk/models/shared/SendEmailResponse.java
 lib/src/main/java/dev/resendapi/javaclientsdk/models/shared/Email.java
-lib/src/main/java/dev/resendapi/javaclientsdk/models/shared/SchemeBearerAuth.java
 lib/src/main/java/dev/resendapi/javaclientsdk/models/shared/Security.java
 USAGE.md
