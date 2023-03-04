@@ -16,7 +16,7 @@
 ### Gradle
 
 ```groovy
-implementation 'dev.resendapi.javaclientsdk:openapi:1.5.0'
+implementation 'dev.resendapi.javaclientsdk:openapi:1.5.1'
 ```
 <!-- End SDK Installation -->
 
