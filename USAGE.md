@@ -1,3 +1,4 @@
+<!-- Start SDK Example Usage -->
 ```java
 package hello.world;
 
@@ -19,10 +20,14 @@ public class Application {
 
             SendEmailRequest req = new SendEmailRequest() {{
                 request = new Email() {{
-                    from = "hello@resend.com";
-                    to = "thefuture@yourcompany.com";
-                    subject = "Welcome to Resend!";
-                    text = "Hello, World!";
+                    bcc = "unde";
+                    cc = "deserunt";
+                    from = "porro";
+                    html = "nulla";
+                    replyTo = "id";
+                    subject = "vero";
+                    text = "perspiciatis";
+                    to = "nulla";
                 }};
             }};
 
@@ -35,3 +40,4 @@ public class Application {
             // handle exception
         }
 ```
+<!-- End SDK Example Usage -->
