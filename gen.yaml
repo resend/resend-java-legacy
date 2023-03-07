@@ -9,6 +9,6 @@ generation:
   sdkFlattening: true
 java:
   version: 1.5.1
-  artifactID: javaclientsdk
-  groupID: dev.resendapi
-  projectName: openapi
+  artifactID: sdk
+  groupID: com.resend
+  projectName: api
