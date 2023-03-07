@@ -2,8 +2,8 @@
 ```java
 package hello.world;
 
-import dev.resendapi.javaclientsdk.Resend;
-import dev.resendapi.javaclientsdk.models.shared.Security;
+import com.resend.sdk.Resend;
+import com.resend.sdk.models.shared.Security;
 
 public class Application {
     public static void main(String[] args) {
