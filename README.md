@@ -18,6 +18,17 @@
 ```groovy
 implementation 'com.resend.sdk:api:1.5.2'
 ```
+
+### Maven
+
+```xml
+<dependency>
+    <groupId>com.resend.api</groupId>
+    <artifactId>sdk</artifactId>
+    <version>1.5.2</version>
+</dependency>
+```
+
 <!-- End SDK Installation -->
 
 ## Authentication
