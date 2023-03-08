@@ -16,7 +16,7 @@
 ### Gradle
 
 ```groovy
-implementation 'com.resend.sdk:api:1.5.2'
+implementation 'com.resend.sdk:api:1.5.3'
 ```
 
 ### Maven
