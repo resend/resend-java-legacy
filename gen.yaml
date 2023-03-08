@@ -8,7 +8,7 @@ generation:
   sdkClassName: resend
   sdkFlattening: true
 java:
-  version: 1.5.1
+  version: 1.5.2
   artifactID: sdk
   groupID: com.resend
   projectName: api
