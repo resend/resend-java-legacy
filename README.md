@@ -64,14 +64,14 @@ public class Application {
 
             SendEmailRequest req = new SendEmailRequest() {{
                 request = new Email() {{
-                    bcc = "unde";
-                    cc = "deserunt";
-                    from = "porro";
-                    html = "nulla";
-                    replyTo = "id";
-                    subject = "vero";
-                    text = "perspiciatis";
-                    to = "nulla";
+                    bcc = "bob@acme.com";
+                    cc = "";
+                    from = "me@acme.com";
+                    html = "none";
+                    replyTo = "";
+                    subject = "hello world";
+                    text = "first email";
+                    to = "amy@acme.com";
                 }};
             }};
 
