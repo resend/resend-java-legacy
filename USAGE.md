@@ -4,6 +4,9 @@ package hello.world;
 
 import com.resend.sdk.Resend;
 import com.resend.sdk.models.shared.Security;
+import com.resend.sdk.models.operations.SendEmailRequest;
+import com.resend.sdk.models.operations.SendEmailResponse;
+import com.resend.sdk.models.shared.Email;
 
 public class Application {
     public static void main(String[] args) {
