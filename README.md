@@ -16,7 +16,7 @@
 ### Gradle
 
 ```groovy
-implementation 'com.resend.sdk:api:1.5.4'
+implementation 'com.resend.api:sdk:1.5.4'
 ```
 
 ### Maven
@@ -43,8 +43,11 @@ Authorization: Bearer re_123
 ```java
 package hello.world;
 
-import dev.resendapi.javaclientsdk.Resend;
-import dev.resendapi.javaclientsdk.models.shared.Security;
+import com.resend.sdk.Resend;
+import com.resend.sdk.models.shared.Security;
+import com.resend.sdk.models.operations.SendEmailRequest;
+import com.resend.sdk.models.operations.SendEmailResponse;
+import com.resend.sdk.models.shared.Email;
 
 public class Application {
     public static void main(String[] args) {
@@ -61,10 +64,14 @@ public class Application {
 
             SendEmailRequest req = new SendEmailRequest() {{
                 request = new Email() {{
-                    from = "hello@resend.com";
-                    to = "thefuture@yourcompany.com";
-                    subject = "Welcome to Resend!";
-                    text = "Hello, World!";
+                    bcc = "unde";
+                    cc = "deserunt";
+                    from = "porro";
+                    html = "nulla";
+                    replyTo = "id";
+                    subject = "vero";
+                    text = "perspiciatis";
+                    to = "nulla";
                 }};
             }};
 
