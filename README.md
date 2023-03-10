@@ -16,7 +16,7 @@
 ### Gradle
 
 ```groovy
-implementation 'com.resend.api:sdk:1.5.4'
+implementation 'com.resend.api:sdk:1.5.3'
 ```
 
 ### Maven
@@ -25,7 +25,7 @@ implementation 'com.resend.api:sdk:1.5.4'
 <dependency>
     <groupId>com.resend.api</groupId>
     <artifactId>sdk</artifactId>
-    <version>1.5.2</version>
+    <version>1.5.3</version>
 </dependency>
 ```
 
