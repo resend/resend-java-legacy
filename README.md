@@ -16,19 +16,8 @@
 ### Gradle
 
 ```groovy
-implementation 'com.resend.api:sdk:1.5.4'
+implementation 'com.resend.sdk:api:1.6.0'
 ```
-
-### Maven
-
-```xml
-<dependency>
-    <groupId>com.resend.api</groupId>
-    <artifactId>sdk</artifactId>
-    <version>1.5.2</version>
-</dependency>
-```
-
 <!-- End SDK Installation -->
 
 ## Authentication
