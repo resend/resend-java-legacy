@@ -43,8 +43,11 @@ Authorization: Bearer re_123
 ```java
 package hello.world;
 
-import dev.resendapi.javaclientsdk.Resend;
-import dev.resendapi.javaclientsdk.models.shared.Security;
+import com.resend.sdk.Resend;
+import com.resend.sdk.models.shared.Security;
+import com.resend.sdk.models.operations.SendEmailRequest;
+import com.resend.sdk.models.operations.SendEmailResponse;
+import com.resend.sdk.models.shared.Email;
 
 public class Application {
     public static void main(String[] args) {
@@ -61,10 +64,14 @@ public class Application {
 
             SendEmailRequest req = new SendEmailRequest() {{
                 request = new Email() {{
-                    from = "hello@resend.com";
-                    to = "thefuture@yourcompany.com";
-                    subject = "Welcome to Resend!";
-                    text = "Hello, World!";
+                    bcc = "bob@acme.com";
+                    cc = "";
+                    from = "me@acme.com";
+                    html = "none";
+                    replyTo = "";
+                    subject = "hello world";
+                    text = "first email";
+                    to = "amy@acme.com";
                 }};
             }};
 
