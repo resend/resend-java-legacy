@@ -4,35 +4,28 @@ package hello.world;
 
 import com.resend.sdk.Resend;
 import com.resend.sdk.models.shared.Security;
-import com.resend.sdk.models.operations.SendEmailRequest;
 import com.resend.sdk.models.operations.SendEmailResponse;
 import com.resend.sdk.models.shared.Email;
 
 public class Application {
     public static void main(String[] args) {
         try {
-            Resend.Builder builder = Resend.builder();
-
-            builder.setSecurity(
-                new Security() {{
+            Resend sdk = Resend.builder()
+                .setSecurity(new Security() {{
                     bearerAuth = "Bearer YOUR_BEARER_TOKEN_HERE";
-                }}
-            );
+                }})
+                .build();
 
-            Resend sdk = builder.build();
-
-            SendEmailRequest req = new SendEmailRequest() {{
-                request = new Email() {{
-                    bcc = "unde";
-                    cc = "deserunt";
-                    from = "porro";
-                    html = "nulla";
-                    replyTo = "id";
-                    subject = "vero";
-                    text = "perspiciatis";
-                    to = "nulla";
-                }};
-            }};
+            com.resend.sdk.models.shared.Email req = new Email() {{
+                bcc = "unde";
+                cc = "deserunt";
+                from = "porro";
+                html = "nulla";
+                replyTo = "id";
+                subject = "vero";
+                text = "perspiciatis";
+                to = "nulla";
+            }}            
 
             SendEmailResponse res = sdk.email.sendEmail(req);
 

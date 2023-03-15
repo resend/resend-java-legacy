@@ -13,17 +13,15 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class QueryParameters {
-    public static List<NameValuePair> parseQueryParams(Object queryParams) throws Exception {
-        if (queryParams == null) {
-            return null;
-        }
-
+    public static <T extends Object> List<NameValuePair> parseQueryParams(Class<T> type, T queryParams,
+            Map<String, Map<String, Map<String, Object>>> globals) throws Exception {
         List<NameValuePair> allParams = new ArrayList<>();
 
-        Field[] fields = queryParams.getClass().getFields();
+        Field[] fields = type.getFields();
 
         for (Field field : fields) {
-            Object value = field.get(queryParams);
+            Object value = queryParams != null ? field.get(queryParams) : null;
+            value = Utils.popualteGlobal(value, field.getName(), "queryParam", globals);
             if (value == null) {
                 continue;
             }
@@ -92,7 +90,8 @@ public class QueryParameters {
                     values.add(String.join(",", items));
                 }
 
-                params.addAll(values.stream().map(v -> new BasicNameValuePair(queryParamsMetadata.name, v)).collect(Collectors.toList()));
+                params.addAll(values.stream().map(v -> new BasicNameValuePair(queryParamsMetadata.name, v))
+                        .collect(Collectors.toList()));
                 break;
             }
             case MAP: {

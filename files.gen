@@ -30,7 +30,6 @@ lib/src/main/java/com/resend/sdk/utils/SpeakeasyMetadata.java
 lib/src/main/java/com/resend/sdk/utils/Types.java
 lib/src/main/java/com/resend/sdk/utils/Utils.java
 settings.gradle
-lib/src/main/java/com/resend/sdk/models/operations/SendEmailRequest.java
 lib/src/main/java/com/resend/sdk/models/operations/SendEmailResponse.java
 lib/src/main/java/com/resend/sdk/models/shared/SendEmailResponse.java
 lib/src/main/java/com/resend/sdk/models/shared/Email.java

@@ -16,10 +16,15 @@ import org.apache.http.NameValuePair;
 public final class Utils {
     public static String generateURL(String baseURL, String path)
             throws IllegalArgumentException, IllegalAccessException {
-        return generateURL(baseURL, path, null);
+        if (baseURL != null && baseURL.endsWith("/")) {
+            baseURL = baseURL.split("/")[0];
+        }
+
+        return baseURL + path;
     }
 
-    public static String generateURL(String baseURL, String path, Object params)
+    public static <T extends Object> String generateURL(Class<T> type, String baseURL, String path, T params,
+            Map<String, Map<String, Map<String, Object>>> globals)
             throws IllegalArgumentException, IllegalAccessException {
         if (baseURL != null && baseURL.endsWith("/")) {
             baseURL = baseURL.split("/")[0];
@@ -27,82 +32,82 @@ public final class Utils {
 
         Map<String, String> pathParams = new HashMap<>();
 
-        if (params != null) {
-            Field[] fields = params.getClass().getFields();
+        Field[] fields = type.getFields();
 
-            for (Field field : fields) {
-                PathParamsMetadata pathParamsMetadata = PathParamsMetadata.parse(field);
-                if (pathParamsMetadata == null) {
-                    continue;
-                }
+        for (Field field : fields) {
+            PathParamsMetadata pathParamsMetadata = PathParamsMetadata.parse(field);
+            if (pathParamsMetadata == null) {
+                continue;
+            }
 
-                Object value = field.get(params);
-                if (value == null) {
-                    continue;
-                }
+            Object value = params != null ? field.get(params) : null;
+            value = Utils.popualteGlobal(value, field.getName(), "pathParam", globals);
+            if (value == null) {
+                continue;
+            }
 
-                switch (pathParamsMetadata.style) {
-                    case "simple":
-                        switch (Types.getType(value.getClass())) {
-                            case ARRAY:
-                                Object[] array = (Object[]) value;
-                                if (array.length == 0) {
+            switch (pathParamsMetadata.style) {
+                case "simple":
+                    switch (Types.getType(value.getClass())) {
+                        case ARRAY:
+                            Object[] array = (Object[]) value;
+                            if (array.length == 0) {
+                                continue;
+                            }
+
+                            pathParams.put(pathParamsMetadata.name,
+                                    String.join(",",
+                                            Arrays.asList(array).stream().map(v -> Utils.valToString(v))
+                                                    .collect(Collectors.toList())));
+                            break;
+                        case MAP:
+                            Map<?, ?> map = (Map<?, ?>) value;
+                            if (map.size() == 0) {
+                                continue;
+                            }
+
+                            pathParams.put(pathParamsMetadata.name,
+                                    String.join(",", map.entrySet().stream().map(e -> {
+                                        if (pathParamsMetadata.explode) {
+                                            return String.format("%s=%s", Utils.valToString(e.getKey()),
+                                                    Utils.valToString(e.getValue()));
+                                        } else {
+                                            return String.format("%s,%s", Utils.valToString(e.getKey()),
+                                                    Utils.valToString(e.getValue()));
+                                        }
+                                    }).collect(Collectors.toList())));
+                            break;
+                        case OBJECT:
+                            List<String> values = new ArrayList<String>();
+
+                            Field[] valueFields = value.getClass().getFields();
+                            for (Field valueField : valueFields) {
+                                PathParamsMetadata valuePathParamsMetadata = PathParamsMetadata.parse(valueField);
+                                if (valuePathParamsMetadata == null) {
                                     continue;
                                 }
 
-                                pathParams.put(pathParamsMetadata.name,
-                                        String.join(",",
-                                                Arrays.asList(array).stream().map(v -> Utils.valToString(v)).collect(Collectors.toList())));
-                                break;
-                            case MAP:
-                                Map<?, ?> map = (Map<?, ?>) value;
-                                if (map.size() == 0) {
+                                Object val = valueField.get(value);
+
+                                if (val == null) {
                                     continue;
                                 }
 
-                                pathParams.put(pathParamsMetadata.name,
-                                        String.join(",", map.entrySet().stream().map(e -> {
-                                            if (pathParamsMetadata.explode) {
-                                                return String.format("%s=%s", Utils.valToString(e.getKey()),
-                                                        Utils.valToString(e.getValue()));
-                                            } else {
-                                                return String.format("%s,%s", Utils.valToString(e.getKey()),
-                                                        Utils.valToString(e.getValue()));
-                                            }
-                                        }).collect(Collectors.toList())));
-                                break;
-                            case OBJECT:
-                                List<String> values = new ArrayList<String>();
-
-                                Field[] valueFields = value.getClass().getFields();
-                                for (Field valueField : valueFields) {
-                                    PathParamsMetadata valuePathParamsMetadata = PathParamsMetadata.parse(valueField);
-                                    if (valuePathParamsMetadata == null) {
-                                        continue;
-                                    }
-
-                                    Object val = valueField.get(value);
-
-                                    if (val == null) {
-                                        continue;
-                                    }
-
-                                    if (pathParamsMetadata.explode) {
-                                        values.add(String.format("%s=%s", valuePathParamsMetadata.name,
-                                                Utils.valToString(val)));
-                                    } else {
-                                        values.add(String.format("%s,%s", valuePathParamsMetadata.name,
-                                                Utils.valToString(val)));
-                                    }
+                                if (pathParamsMetadata.explode) {
+                                    values.add(String.format("%s=%s", valuePathParamsMetadata.name,
+                                            Utils.valToString(val)));
+                                } else {
+                                    values.add(String.format("%s,%s", valuePathParamsMetadata.name,
+                                            Utils.valToString(val)));
                                 }
+                            }
 
-                                pathParams.put(pathParamsMetadata.name, String.join(",", values));
-                                break;
-                            default:
-                                pathParams.put(pathParamsMetadata.name, Utils.valToString(value));
-                                break;
-                        }
-                }
+                            pathParams.put(pathParamsMetadata.name, String.join(",", values));
+                            break;
+                        default:
+                            pathParams.put(pathParamsMetadata.name, Utils.valToString(value));
+                            break;
+                    }
             }
         }
 
@@ -139,13 +144,15 @@ public final class Utils {
         return false;
     }
 
-    public static SerializedBody serializeRequestBody(Object request) throws NoSuchFieldException,
+    public static SerializedBody serializeRequestBody(Object request, String requestField, String serializationMethod)
+            throws NoSuchFieldException,
             IllegalArgumentException, IllegalAccessException, UnsupportedOperationException, IOException {
-        return RequestBody.serialize(request);
+        return RequestBody.serialize(request, requestField, serializationMethod);
     }
 
-    public static List<NameValuePair> getQueryParams(Object params) throws Exception {
-        return QueryParameters.parseQueryParams(params);
+    public static <T extends Object> List<NameValuePair> getQueryParams(Class<T> type, T params,
+            Map<String, Map<String, Map<String, Object>>> globals) throws Exception {
+        return QueryParameters.parseQueryParams(type, params, globals);
     }
 
     public static HTTPClient configureSecurityClient(HTTPClient client, Object security) throws Exception {
@@ -210,7 +217,8 @@ public final class Utils {
 
                         if (headerMetadata.explode) {
                             items.add(
-                                    String.format("%s=%s", valueHeaderMetadata.name, Utils.valToString(valueFieldValue)));
+                                    String.format("%s=%s", valueHeaderMetadata.name,
+                                            Utils.valToString(valueFieldValue)));
                         } else {
                             items.add(valueHeaderMetadata.name);
                             items.add(Utils.valToString(valueFieldValue));
@@ -301,6 +309,21 @@ public final class Utils {
             default:
                 return String.valueOf(value);
         }
+    }
+
+    public static Object popualteGlobal(Object value, String fieldName, String paramType,
+            Map<String, Map<String, Map<String, Object>>> globals) {
+        if (value == null &&
+                globals != null &&
+                globals.containsKey("parameters") &&
+                globals.get("parameters").containsKey(paramType)) {
+            Object globalVal = globals.get("parameters").get(paramType).get(fieldName);
+            if (globalVal != null) {
+                value = globalVal;
+            }
+        }
+
+        return value;
     }
 
     private Utils() {

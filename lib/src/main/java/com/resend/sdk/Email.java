@@ -31,14 +31,14 @@ public class Email {
     /**
      * sendEmail - Send an email
     **/
-    public com.resend.sdk.models.operations.SendEmailResponse sendEmail(com.resend.sdk.models.operations.SendEmailRequest request) throws Exception {
+    public com.resend.sdk.models.operations.SendEmailResponse sendEmail(com.resend.sdk.models.shared.Email request) throws Exception {
         String baseUrl = this._serverUrl;
         String url = com.resend.sdk.utils.Utils.generateURL(baseUrl, "/email");
         
         HTTPRequest req = new HTTPRequest();
         req.setMethod("POST");
         req.setURL(url);
-        SerializedBody serializedRequestBody = com.resend.sdk.utils.Utils.serializeRequestBody(request);
+        SerializedBody serializedRequestBody = com.resend.sdk.utils.Utils.serializeRequestBody(request, "request", "json");
         if (serializedRequestBody == null) {
             throw new Exception("Request body is required");
         }
