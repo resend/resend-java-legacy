@@ -16,7 +16,7 @@
 ### Gradle
 
 ```groovy
-implementation 'com.resend.sdk:api:1.7.0'
+implementation 'com.resend.sdk:api:1.8.0'
 ```
 <!-- End SDK Installation -->
 

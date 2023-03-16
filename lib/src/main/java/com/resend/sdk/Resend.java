@@ -16,8 +16,8 @@ public class Resend {
 	private com.resend.sdk.models.shared.Security _security;
 	private String _serverUrl;
 	private String _language = "java";
-	private String _sdkVersion = "1.7.0";
-	private String _genVersion = "1.11.0";
+	private String _sdkVersion = "1.8.0";
+	private String _genVersion = "1.12.0";
 	public static class Builder {
 		private HTTPClient client;
 		private com.resend.sdk.models.shared.Security security;
