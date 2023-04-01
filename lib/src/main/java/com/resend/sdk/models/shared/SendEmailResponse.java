@@ -20,7 +20,8 @@ public class SendEmailResponse {
      */
     @JsonSerialize(using = DateTimeSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer.class)
-    @JsonProperty("created_at")public OffsetDateTime createdAt;
+    @JsonProperty("created_at")
+    public OffsetDateTime createdAt;
     public SendEmailResponse withCreatedAt(OffsetDateTime createdAt) {
         this.createdAt = createdAt;
         return this;
@@ -29,7 +30,8 @@ public class SendEmailResponse {
     /**
      * The sender email address.
      */
-    @JsonProperty("from")public String from;
+    @JsonProperty("from")
+    public String from;
     public SendEmailResponse withFrom(String from) {
         this.from = from;
         return this;
@@ -38,7 +40,8 @@ public class SendEmailResponse {
     /**
      * The unique identifier of the sent email.
      */
-    @JsonProperty("id")public String id;
+    @JsonProperty("id")
+    public String id;
     public SendEmailResponse withId(String id) {
         this.id = id;
         return this;
@@ -47,7 +50,8 @@ public class SendEmailResponse {
     /**
      * The recipient email address.
      */
-    @JsonProperty("to")public String to;
+    @JsonProperty("to")
+    public String to;
     public SendEmailResponse withTo(String to) {
         this.to = to;
         return this;

@@ -17,14 +17,14 @@ public class Application {
                 .build();
 
             com.resend.sdk.models.shared.Email req = new Email() {{
-                bcc = "unde";
-                cc = "deserunt";
-                from = "porro";
-                html = "nulla";
-                replyTo = "id";
-                subject = "vero";
-                text = "perspiciatis";
-                to = "nulla";
+                bcc = "corrupti";
+                cc = "provident";
+                from = "distinctio";
+                html = "quibusdam";
+                replyTo = "unde";
+                subject = "nulla";
+                text = "corrupti";
+                to = "illum";
             }}            
 
             SendEmailResponse res = sdk.email.sendEmail(req);

@@ -16,7 +16,8 @@ public class Email {
      * Bcc recipient email address. Multiple addresses are comma separated. Max 50.
      */
     @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("bcc")public String bcc;
+    @JsonProperty("bcc")
+    public String bcc;
     public Email withBcc(String bcc) {
         this.bcc = bcc;
         return this;
@@ -26,16 +27,18 @@ public class Email {
      * Cc recipient email address. Multiple addresses are comma separated. Max 50.
      */
     @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("cc")public String cc;
+    @JsonProperty("cc")
+    public String cc;
     public Email withCc(String cc) {
         this.cc = cc;
         return this;
     }
     
     /**
-     * Sender email address. To include a friendly name, use the format "Your Name <sender@domain.com>".
+     * Sender email address. To include a friendly name, use the format "Your Name &lt;sender@domain.com&gt;".
      */
-    @JsonProperty("from")public String from;
+    @JsonProperty("from")
+    public String from;
     public Email withFrom(String from) {
         this.from = from;
         return this;
@@ -45,7 +48,8 @@ public class Email {
      * The HTML version of the message.
      */
     @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("html")public String html;
+    @JsonProperty("html")
+    public String html;
     public Email withHtml(String html) {
         this.html = html;
         return this;
@@ -55,7 +59,8 @@ public class Email {
      * Reply-to email address.
      */
     @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("reply_to")public String replyTo;
+    @JsonProperty("reply_to")
+    public String replyTo;
     public Email withReplyTo(String replyTo) {
         this.replyTo = replyTo;
         return this;
@@ -64,7 +69,8 @@ public class Email {
     /**
      * Email subject.
      */
-    @JsonProperty("subject")public String subject;
+    @JsonProperty("subject")
+    public String subject;
     public Email withSubject(String subject) {
         this.subject = subject;
         return this;
@@ -74,7 +80,8 @@ public class Email {
      * The plain text version of the message.
      */
     @JsonInclude(Include.NON_ABSENT)
-    @JsonProperty("text")public String text;
+    @JsonProperty("text")
+    public String text;
     public Email withText(String text) {
         this.text = text;
         return this;
@@ -83,7 +90,8 @@ public class Email {
     /**
      * Recipient email address. Multiple addresses are comma separated. Max 50.
      */
-    @JsonProperty("to")public String to;
+    @JsonProperty("to")
+    public String to;
     public Email withTo(String to) {
         this.to = to;
         return this;
