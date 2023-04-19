@@ -209,3 +209,9 @@ Based on:
 Based on:
 - OpenAPI Doc 0.1.1 https://raw.githubusercontent.com/resendlabs/resend-openapi/main/resend.yaml
 - Speakeasy CLI 1.20.1 https://github.com/speakeasy-api/speakeasy
+
+## 2023-04-19 00:59:15
+### Changes
+Based on:
+- OpenAPI Doc 0.1.1 https://raw.githubusercontent.com/resendlabs/resend-openapi/main/resend.yaml
+- Speakeasy CLI 1.20.2 https://github.com/speakeasy-api/speakeasy
