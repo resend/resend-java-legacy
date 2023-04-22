@@ -11,21 +11,18 @@ public class Application {
     public static void main(String[] args) {
         try {
             Resend sdk = Resend.builder()
-                .setSecurity(new Security() {{
+                .setSecurity(new Security("corrupti") {{
                     bearerAuth = "Bearer YOUR_BEARER_TOKEN_HERE";
                 }})
                 .build();
 
-            com.resend.sdk.models.shared.Email req = new Email() {{
-                bcc = "corrupti";
-                cc = "provident";
-                from = "distinctio";
-                html = "quibusdam";
-                replyTo = "unde";
-                subject = "nulla";
-                text = "corrupti";
-                to = "illum";
-            }}            
+            com.resend.sdk.models.shared.Email req = new Email("provident", "distinctio", "quibusdam") {{
+                bcc = "unde";
+                cc = "nulla";
+                html = "corrupti";
+                replyTo = "illum";
+                text = "vel";
+            }};            
 
             SendEmailResponse res = sdk.email.sendEmail(req);
 

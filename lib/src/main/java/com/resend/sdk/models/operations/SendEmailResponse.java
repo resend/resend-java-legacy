@@ -4,6 +4,7 @@
 
 package com.resend.sdk.models.operations;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.net.http.HttpResponse;
 
 public class SendEmailResponse {
@@ -38,4 +39,9 @@ public class SendEmailResponse {
         return this;
     }
     
+
+    public SendEmailResponse(@JsonProperty("ContentType") String contentType, @JsonProperty("StatusCode") Integer statusCode) {
+    this.contentType = contentType;
+this.statusCode = statusCode;
+  }
 }

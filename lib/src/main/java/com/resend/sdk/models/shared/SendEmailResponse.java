@@ -57,4 +57,11 @@ public class SendEmailResponse {
         return this;
     }
     
+
+    public SendEmailResponse(@JsonProperty("created_at") OffsetDateTime createdAt, @JsonProperty("from") String from, @JsonProperty("id") String id, @JsonProperty("to") String to) {
+    this.createdAt = createdAt;
+this.from = from;
+this.id = id;
+this.to = to;
+  }
 }

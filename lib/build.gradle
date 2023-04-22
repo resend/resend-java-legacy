@@ -41,7 +41,7 @@ publishing {
         maven(MavenPublication) {
             groupId = 'com.resend'
             artifactId = 'sdk'
-            version = '1.15.1'
+            version = '1.16.0'
 
             from components.java
 

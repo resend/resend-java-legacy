@@ -61,11 +61,9 @@ public class Email {
 
         String contentType = httpRes.headers().firstValue("Content-Type").orElse("application/octet-stream");
 
-        com.resend.sdk.models.operations.SendEmailResponse res = new com.resend.sdk.models.operations.SendEmailResponse() {{
+        com.resend.sdk.models.operations.SendEmailResponse res = new com.resend.sdk.models.operations.SendEmailResponse(contentType, httpRes.statusCode()) {{
             sendEmailResponse = null;
         }};
-        res.statusCode = httpRes.statusCode();
-        res.contentType = contentType;
         res.rawResponse = httpRes;
         
         if (httpRes.statusCode() == 200) {
