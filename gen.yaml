@@ -2,13 +2,13 @@ configVersion: 1.0.0
 management:
   docChecksum: 70864ba961d69e4ff7e191e6d9b7401f
   docVersion: 0.1.1
-  speakeasyVersion: 1.22.2
+  speakeasyVersion: 1.23.1
 generation:
   telemetryEnabled: true
   sdkClassName: resend
   sdkFlattening: false
 java:
-  version: 1.16.1
+  version: 1.17.0
   artifactID: sdk
   companyEmail: info@mycompany.com
   companyName: My Company

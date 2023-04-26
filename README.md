@@ -16,7 +16,7 @@
 ### Gradle
 
 ```groovy
-implementation 'com.resend.sdk:api:1.16.1'
+implementation 'com.resend.sdk:api:1.17.0'
 ```
 <!-- End SDK Installation -->
 
@@ -78,9 +78,9 @@ public class Application {
 ## Available Resources and Operations
 
 
-### email
+### [email](docs/email/README.md)
 
-* `sendEmail` - Send an email
+* [sendEmail](docs/email/README.md#sendemail) - Send an email
 <!-- End SDK Available Operations -->
 
 ## Contributions

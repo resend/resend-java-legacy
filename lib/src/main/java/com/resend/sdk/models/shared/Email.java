@@ -97,10 +97,9 @@ public class Email {
         return this;
     }
     
-
     public Email(@JsonProperty("from") String from, @JsonProperty("subject") String subject, @JsonProperty("to") String to) {
-    this.from = from;
-this.subject = subject;
-this.to = to;
+        this.from = from;
+        this.subject = subject;
+        this.to = to;
   }
 }

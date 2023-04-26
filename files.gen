@@ -34,4 +34,6 @@ lib/src/main/java/com/resend/sdk/models/operations/SendEmailResponse.java
 lib/src/main/java/com/resend/sdk/models/shared/SendEmailResponse.java
 lib/src/main/java/com/resend/sdk/models/shared/Email.java
 lib/src/main/java/com/resend/sdk/models/shared/Security.java
+docs/resend/README.md
+docs/email/README.md
 USAGE.md
