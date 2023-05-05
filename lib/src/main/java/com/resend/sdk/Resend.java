@@ -28,8 +28,8 @@ public class Resend {
 	private com.resend.sdk.models.shared.Security _security;
 	private String _serverUrl;
 	private String _language = "java";
-	private String _sdkVersion = "1.20.0";
-	private String _genVersion = "2.24.0";
+	private String _sdkVersion = "1.21.0";
+	private String _genVersion = "2.26.0";
 	/**
 	 * The Builder class allows the configuration of a new instance of the SDK.
 	 */
