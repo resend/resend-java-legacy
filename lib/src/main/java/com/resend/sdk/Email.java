@@ -34,6 +34,12 @@ public class Email {
 		this._genVersion = genVersion;
 	}
 
+    /**
+     * Send an email
+     * @param request the request object containing all of the parameters for the API call
+     * @return the response from the API call
+     * @throws Exception if the API call fails
+     */
     public com.resend.sdk.models.operations.SendEmailResponse sendEmail(com.resend.sdk.models.shared.Email request) throws Exception {
         String baseUrl = this._serverUrl;
         String url = com.resend.sdk.utils.Utils.generateURL(baseUrl, "/email");
