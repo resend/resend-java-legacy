@@ -27,7 +27,7 @@ public class Application {
         try {
             Resend sdk = Resend.builder()
                 .setSecurity(new Security("error") {{
-                    bearerAuth = "Bearer YOUR_BEARER_TOKEN_HERE";
+                    bearerAuth = "YOUR_BEARER_TOKEN_HERE";
                 }})
                 .build();
 
