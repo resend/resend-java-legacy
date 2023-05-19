@@ -16,19 +16,8 @@
 ### Gradle
 
 ```groovy
-implementation 'com.resend.api:sdk:1.5.3'
+implementation 'com.resend.sdk:api:1.27.0'
 ```
-
-### Maven
-
-```xml
-<dependency>
-    <groupId>com.resend.api</groupId>
-    <artifactId>sdk</artifactId>
-    <version>1.5.3</version>
-</dependency>
-```
-
 <!-- End SDK Installation -->
 
 ## Authentication
@@ -86,12 +75,12 @@ public class Application {
 ```
 
 <!-- Start SDK Available Operations -->
-## SDK Available Operations
+## Available Resources and Operations
 
 
-### email
+### [email](docs/email/README.md)
 
-* `sendEmail` - Send an email
+* [sendEmail](docs/email/README.md#sendemail) - Send an email
 <!-- End SDK Available Operations -->
 
 ## Contributions

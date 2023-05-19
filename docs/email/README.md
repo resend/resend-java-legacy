@@ -1,4 +1,19 @@
-<!-- Start SDK Example Usage -->
+# email
+
+## Overview
+
+Email operations
+
+### Available Operations
+
+* [sendEmail](#sendemail) - Send an email
+
+## sendEmail
+
+Send an email
+
+### Example Usage
+
 ```java
 package hello.world;
 
@@ -11,17 +26,17 @@ public class Application {
     public static void main(String[] args) {
         try {
             Resend sdk = Resend.builder()
-                .setSecurity(new Security("corrupti") {{
+                .setSecurity(new Security("error") {{
                     bearerAuth = "YOUR_BEARER_TOKEN_HERE";
                 }})
                 .build();
 
-            com.resend.sdk.models.shared.Email req = new Email("provident", "distinctio", "quibusdam") {{
-                bcc = "unde";
-                cc = "nulla";
-                html = "corrupti";
-                replyTo = "illum";
-                text = "vel";
+            com.resend.sdk.models.shared.Email req = new Email("deserunt", "suscipit", "iure") {{
+                bcc = "magnam";
+                cc = "debitis";
+                html = "ipsa";
+                replyTo = "delectus";
+                text = "tempora";
             }};            
 
             SendEmailResponse res = sdk.email.sendEmail(req);
@@ -35,4 +50,3 @@ public class Application {
     }
 }
 ```
-<!-- End SDK Example Usage -->
